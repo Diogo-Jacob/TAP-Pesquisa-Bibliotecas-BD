@@ -63,15 +63,13 @@ A compatibilidade depende da existência de um driver ODBC adequado para o banco
 
 O `pyodbc` é principalmente utilizado com bancos de dados relacionais.
 
-Isso ocorre porque bancos relacionais trabalham normalmente com SQL e possuem ampla compatibilidade com drivers ODBC.
-
 ## 4. A biblioteca trabalha com SQL puro, ORM ou ambos?
 
 O `pyodbc` trabalha principalmente com SQL puro.
 
 Os comandos SQL são escritos diretamente pelo programador e enviados para o banco de dados através de um cursor.
 
-Por exemplo:
+Exemplo:
 
 ```python
 cursor.execute("SELECT * FROM clientes")
@@ -81,23 +79,13 @@ O `pyodbc` não possui um ORM próprio.
 
 ## 5. Como é feita a instalação?
 
-A instalação pode ser realizada utilizando o `pip`:
-
 ```bash
 pip install pyodbc
 ```
 
-Ou:
-
-```bash
-python -m pip install pyodbc
-```
-
-Além da biblioteca, é necessário possuir o driver ODBC correspondente ao banco de dados que será utilizado.
+Além da biblioteca, é necessário possuir o driver ODBC correspondente ao banco de dados utilizado.
 
 ## 6. Como é criado um exemplo simples de conexão?
-
-Um exemplo de conexão com um banco Microsoft SQL Server pode ser feito da seguinte forma:
 
 ```python
 import pyodbc
@@ -116,19 +104,7 @@ print("Conexão realizada com sucesso!")
 conexao.close()
 ```
 
-Nesse exemplo:
-
-* `DRIVER` informa qual driver ODBC será utilizado;
-* `SERVER` informa o endereço do servidor;
-* `DATABASE` informa o banco que será acessado;
-* `UID` informa o usuário;
-* `PWD` informa a senha.
-
 ## 7. Como executar uma consulta SELECT simples?
-
-Primeiro é criado um cursor a partir da conexão. Depois, o comando SQL pode ser executado utilizando o método `execute()`.
-
-Exemplo:
 
 ```python
 import pyodbc
@@ -155,13 +131,127 @@ cursor.close()
 conexao.close()
 ```
 
-Nesse código, o comando:
+---
+
+# 2. pymssql
+
+## 1. Qual é o objetivo principal da biblioteca?
+
+O `pymssql` é uma biblioteca Python utilizada para realizar a comunicação entre aplicações Python e bancos de dados Microsoft SQL Server.
+
+Ela fornece uma interface compatível com o padrão DB-API do Python, permitindo realizar operações no banco como consultas, inserções, atualizações e exclusões.
+
+Diferente do `pyodbc`, que pode trabalhar com vários bancos através de drivers ODBC, o `pymssql` é desenvolvido especificamente para Microsoft SQL Server.
+
+## 2. Que tipo de banco de dados ela permite acessar?
+
+O `pymssql` é utilizado principalmente para acessar:
+
+* Microsoft SQL Server
+* Bancos SQL Server hospedados no Microsoft Azure
+
+A biblioteca utiliza o protocolo TDS (Tabular Data Stream), através do FreeTDS, para realizar a comunicação com o SQL Server.
+
+## 3. Ela é mais indicada para bancos relacionais ou não relacionais?
+
+O `pymssql` é indicado para bancos de dados relacionais.
+
+O Microsoft SQL Server utiliza o modelo relacional, em que os dados são organizados principalmente em tabelas compostas por linhas e colunas.
+
+## 4. A biblioteca trabalha com SQL puro, ORM ou ambos?
+
+O `pymssql` trabalha diretamente com comandos SQL.
+
+Por exemplo:
 
 ```python
 cursor.execute("SELECT * FROM clientes")
 ```
 
-executa a consulta no banco de dados.
+A biblioteca não possui um ORM próprio.
+
+Caso seja necessário utilizar ORM, outras ferramentas podem ser utilizadas em conjunto, como o SQLAlchemy.
+
+## 5. Como é feita a instalação?
+
+A instalação pode ser realizada através do `pip`:
+
+```bash
+pip install pymssql
+```
+
+Também pode ser utilizado:
+
+```bash
+python -m pip install pymssql
+```
+
+Depois da instalação, a biblioteca pode ser importada no Python:
+
+```python
+import pymssql
+```
+
+## 6. Como é criado um exemplo simples de conexão?
+
+Uma conexão simples com um Microsoft SQL Server pode ser realizada da seguinte forma:
+
+```python
+import pymssql
+
+conexao = pymssql.connect(
+    server="localhost",
+    user="usuario",
+    password="senha",
+    database="empresa"
+)
+
+print("Conexão realizada com sucesso!")
+
+conexao.close()
+```
+
+Neste exemplo:
+
+* `server` representa o endereço do SQL Server;
+* `user` representa o usuário utilizado na autenticação;
+* `password` representa a senha;
+* `database` representa o banco de dados que será acessado.
+
+## 7. Como executar uma consulta SELECT simples?
+
+Depois de estabelecer a conexão, podemos criar um cursor e utilizar o método `execute()` para executar o comando SQL.
+
+```python
+import pymssql
+
+conexao = pymssql.connect(
+    server="localhost",
+    user="usuario",
+    password="senha",
+    database="empresa"
+)
+
+cursor = conexao.cursor()
+
+cursor.execute("SELECT * FROM clientes")
+
+registros = cursor.fetchall()
+
+for registro in registros:
+    print(registro)
+
+cursor.close()
+conexao.close()
+```
+
+O comando:
+
+```python
+cursor.execute("SELECT * FROM clientes")
+```
+
+envia a consulta SQL para o banco.
 
 Já:
 
@@ -169,4 +259,4 @@ Já:
 cursor.fetchall()
 ```
 
-recupera todos os registros retornados pela consulta.
+recupera os registros retornados pela consulta.
