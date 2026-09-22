@@ -676,3 +676,42 @@ for registro in cursor.execute("SELECT * FROM clientes"):
     print(registro)
 ```
 
+# Comparação das Bibliotecas
+
+A tabela abaixo resume as principais diferenças entre as bibliotecas pesquisadas:
+
+| Biblioteca | Banco(s) principal(is)                                  | Tipo de banco | SQL puro | ORM | Instalação                    |
+| ---------- | ------------------------------------------------------- | ------------- | -------- | --- | ----------------------------- |
+| pyodbc     | SQL Server, MySQL, PostgreSQL, Oracle e outros via ODBC | Relacional    | Sim      | Não | `pip install pyodbc`          |
+| pymssql    | Microsoft SQL Server                                    | Relacional    | Sim      | Não | `pip install pymssql`         |
+| psycopg2   | PostgreSQL                                              | Relacional    | Sim      | Não | `pip install psycopg2-binary` |
+| SQLAlchemy | SQLite, PostgreSQL, MySQL, SQL Server, Oracle e outros  | Relacional    | Sim      | Sim | `pip install SQLAlchemy`      |
+| sqlite3    | SQLite                                                  | Relacional    | Sim      | Não | Já incluído no Python         |
+
+## Principais diferenças
+
+Cada biblioteca possui características diferentes e pode ser utilizada em situações específicas.
+
+O `pyodbc` é uma alternativa flexível porque consegue acessar diferentes bancos de dados através de drivers ODBC. Ele é bastante utilizado principalmente com Microsoft SQL Server.
+
+O `pymssql` possui uma finalidade mais específica, sendo voltado para a comunicação entre aplicações Python e Microsoft SQL Server.
+
+O `psycopg2` é voltado especificamente para PostgreSQL e permite trabalhar diretamente com comandos SQL.
+
+O `SQLAlchemy` oferece um nível maior de abstração. Além de permitir a execução de consultas SQL, ele disponibiliza recursos de ORM, permitindo representar tabelas e relacionamentos através de classes Python.
+
+Já o `sqlite3` é uma opção simples e prática para aplicações menores, estudos, testes e sistemas que não necessitam de um servidor de banco de dados separado. Como já faz parte da biblioteca padrão do Python, não exige uma instalação adicional.
+
+# Conclusão
+
+As bibliotecas pesquisadas possuem como objetivo permitir a comunicação entre aplicações Python e bancos de dados, porém apresentam diferenças na forma de utilização e nos bancos suportados.
+
+Bibliotecas como `pymssql` e `psycopg2` são direcionadas a sistemas específicos, como SQL Server e PostgreSQL, respectivamente. O `pyodbc` permite maior variedade de bancos por utilizar o padrão ODBC.
+
+O `sqlite3` se destaca pela simplicidade, sendo adequado principalmente para aplicações menores e situações em que não é necessário utilizar um servidor de banco de dados.
+
+O `SQLAlchemy`, por outro lado, possui recursos mais avançados e permite trabalhar tanto com comandos SQL quanto com ORM, facilitando a organização de aplicações maiores.
+
+Também foi possível observar que todas as bibliotecas analisadas possuem foco principalmente em bancos de dados relacionais. Para bancos não relacionais normalmente são utilizadas bibliotecas específicas para cada tecnologia, como clientes próprios para MongoDB, Redis e outros sistemas.
+
+Portanto, a escolha da biblioteca depende do banco de dados utilizado, da complexidade da aplicação e da forma como o desenvolvedor pretende realizar o acesso aos dados.
